@@ -1,22 +1,24 @@
-# Use official OpenJDK 17 image
-FROM openjdk:17
+# Use CentOS 8 as base
+FROM centos:8
 
 # Set working directory
 WORKDIR /app
+
+# Install Java 17 and Maven
+RUN dnf -y install java-17-openjdk maven && \
+    dnf clean all
 
 # Copy source code
 COPY src ./src
 COPY pom.xml .
 
-# Install Maven inside container
-RUN yum -y update && \
-    yum -y install java-17-openjdk maven && \
-    yum clean all
+# Build the JAR
+RUN mvn clean package -DskipTests
 
-# Copy the built JAR to a standard name
+# Copy built JAR to standard name
 RUN cp target/myjavaapp-1.0-SNAPSHOT.jar app.jar
 
-# Expose port (optional)
+# Expose port
 EXPOSE 8080
 
 # Run the app
