@@ -1,13 +1,13 @@
 # Use CentOS 8 as base
-FROM centos:8
+FROM  eclipse-temurin:17-jdk-alpine
 
 # Set working directory
 WORKDIR /app
 
 # Install Java 17 and Maven
-RUN dnf -y update && \
-    dnf -y install java-17-openjdk maven && \
-    dnf clean all
+# RUN dnf -y update && \
+    # dnf -y install java-17-openjdk maven && \
+    # dnf clean all
 # Copy source code
 COPY src ./src
 COPY pom.xml .
