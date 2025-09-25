@@ -2,6 +2,6 @@ package com.example;
 
 public class App {
     public static void main(String[] args) {
-        System.out.println("Hello from Rajesh veeranki Docker Java App!");
+        System.out.println("Hello from Docker Java App!");
     }
 }
