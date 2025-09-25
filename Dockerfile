@@ -1,5 +1,5 @@
 # Stage 1: Build the app
-FROM maven:3.9.0-openjdk-17 AS build
+FROM maven:3.9.0-eclipse-temurin-17 AS build
 
 WORKDIR /app
 
@@ -12,7 +12,7 @@ COPY src ./src
 RUN mvn clean package -DskipTests
 
 # Stage 2: Run the app
-FROM openjdk:17-jdk-slim
+FROM eclipse-temurin:17-jdk-slim
 
 ARG APP_HOME=/app
 ENV APP_HOME=$APP_HOME
