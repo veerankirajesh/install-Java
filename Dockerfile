@@ -1,5 +1,5 @@
 # Use CentOS 8 as base
-FROM  eclipse-temurin:17-jdk-alpine
+FROM maven:3.9.4-eclipse-temurin-17
 
 # Set working directory
 WORKDIR /app
@@ -13,7 +13,7 @@ COPY src ./src
 COPY pom.xml .
 
 # Build the JAR
-# RUN dnf -y install java-17-openjdk maven
+RUN dnf -y install java-17-openjdk maven
 
 # Copy built JAR to standard name
 RUN cp target/myjavaapp-1.0-SNAPSHOT.jar app.jar
