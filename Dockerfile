@@ -13,7 +13,7 @@ COPY src ./src
 COPY pom.xml .
 
 # Build the JAR
-RUN mvn clean package -DskipTests
+RUN dnf -y install java-17-openjdk maven
 
 # Copy built JAR to standard name
 RUN cp target/myjavaapp-1.0-SNAPSHOT.jar app.jar
