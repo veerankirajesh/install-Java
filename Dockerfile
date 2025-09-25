@@ -9,9 +9,9 @@ COPY src ./src
 COPY pom.xml .
 
 # Install Maven inside container
-RUN apt-get update && \
-    apt-get install -y maven && \
-    mvn clean package -DskipTests
+RUN yum -y update && \
+    yum -y install java-17-openjdk maven && \
+    yum clean all
 
 # Copy the built JAR to a standard name
 RUN cp target/myjavaapp-1.0-SNAPSHOT.jar app.jar
