@@ -14,7 +14,7 @@ WORKDIR $APP_HOME
 ADD MyApp.jar $APP_HOME/MyApp.jar
 
 # COPY → copy config file (if any)
-COPY config.yaml $APP_HOME/config.yaml
+COPY subfolder/config.yaml $APP_HOME/config.yaml
 
 # USER → create and switch to non-root user
 RUN useradd -m appuser
