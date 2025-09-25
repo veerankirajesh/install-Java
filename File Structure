@@ -1,0 +1,7 @@
+/myapp
+ ├── Dockerfile
+ ├── pom.xml
+ └── src/
+     └── main/
+         ├── java/com/example/App.java
+         └── resources/application.properties
