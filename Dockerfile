@@ -5,9 +5,9 @@ FROM centos:8
 WORKDIR /app
 
 # Install Java 17 and Maven
-RUN dnf -y install java-17-openjdk maven && \
+RUN dnf -y update && \
+    dnf -y install java-17-openjdk maven && \
     dnf clean all
-
 # Copy source code
 COPY src ./src
 COPY pom.xml .
