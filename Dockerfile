@@ -1,30 +1,35 @@
-# Use OpenJDK base image
+# Stage 1: Build the app
+FROM maven:3.9.0-openjdk-17 AS build
+
+WORKDIR /app
+
+# Copy pom.xml and download dependencies first (cache optimization)
+COPY pom.xml .
+RUN mvn dependency:go-offline -B
+
+# Copy source code and build
+COPY src ./src
+RUN mvn clean package -DskipTests
+
+# Stage 2: Run the app
 FROM openjdk:17-jdk-slim
 
-# ARG → build-time variable
 ARG APP_HOME=/app
-
-# ENV → runtime environment variable
 ENV APP_HOME=$APP_HOME
-
-# WORKDIR → set working directory
 WORKDIR $APP_HOME
 
-# ADD → add JAR file (example)
-ADD MyApp.jar $APP_HOME/MyApp.jar
+# Copy built jar from build stage
+COPY --from=build /app/target/*.jar app.jar
 
-# COPY → copy config file (if any)
-COPY subfolder/config.yaml $APP_HOME/config.yaml
+# Copy config if any
+COPY config.yaml $APP_HOME/config.yaml
 
-# USER → create and switch to non-root user
-RUN useradd -m appuser
+# Create non-root user
+RUN useradd -m appuser && chown -R appuser:appuser $APP_HOME
 USER appuser
 
-# EXPOSE → open port
+# Expose port
 EXPOSE 8080
 
-# CMD → default command
-CMD ["java", "-jar", "MyApp.jar"]
-
-# ENTRYPOINT → fixed executable
-ENTRYPOINT ["java", "-jar", "MyApp.jar"]
+# Run the app
+ENTRYPOINT ["java", "-jar", "app.jar"]
